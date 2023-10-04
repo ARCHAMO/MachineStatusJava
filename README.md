@@ -2,6 +2,10 @@
 
 Prueba de conocimientos en java y creacion de Rest Api.
 
+## **IDE usado**
+
+NetBeans IDE 19
+
 ## **FrameWorks usados**
 
 Sprint Boot
