@@ -57,7 +57,7 @@ public class EstadoService {
             _estadoRepository.save(existeEstado);
 
             response.setStatus(true);
-            response.setMessage("Registro encontrado");
+            response.setMessage("Registro modificado correctamento");
             response.setData(existeEstado);
             
         } catch (Exception e) {
@@ -128,6 +128,26 @@ public class EstadoService {
             response.setStatus(false);
             response.setMessage(e.getMessage());
             response.setData(null);
+        }
+        return response;
+    }
+    
+    public ResponseWebApi getEstadosPorObjeto(Long idObjeto) {
+        ResponseWebApi response = new ResponseWebApi();
+        List<Estado> result = null;
+        try {
+            result = _estadoRepository.findEstadosByObjeto(idObjeto);
+            
+            response.setStatus(true);
+            response.setMessage(result.size() + " registro encontrado");
+            response.setData(result);
+            
+        } catch (Exception e) {
+            response.setStatus(false);
+            response.setMessage(e.getMessage());
+            response.setData(null);
+        } finally {
+            
         }
         return response;
     }

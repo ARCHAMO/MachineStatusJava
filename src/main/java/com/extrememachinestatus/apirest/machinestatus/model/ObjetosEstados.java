@@ -14,9 +14,9 @@ public class ObjetosEstados {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idObjetoEstado;
 
-    private int objetoId;
+    private Long objetoId;
 
-    private int estadoId;
+    private Long estadoId;
 
     private String estadoRegistro;
     
@@ -24,19 +24,19 @@ public class ObjetosEstados {
         this.idObjetoEstado = idObjetoEstado;
     }
 
-    public int getObjeto_id() {
+    public Long getObjetoId() {
         return objetoId;
     }
 
-    public void setObjeto_id(int objetoId) {
+    public void setObjetoId(Long objetoId) {
         this.objetoId = objetoId;
     }
 
-    public int getEstado_id() {
+    public Long getEstadoId() {
         return estadoId;
     }
 
-    public void setEstado_id(int estadoId) {
+    public void setEstadoId(Long estadoId) {
         this.estadoId = estadoId;
     }
 

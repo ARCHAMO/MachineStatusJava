@@ -60,7 +60,7 @@ public class ObjetoService {
             _objetoRepository.save(existeObjeto);
 
             response.setStatus(true);
-            response.setMessage("Registro encontrado");
+            response.setMessage("Registro modificado correctamento");
             response.setData(existeObjeto);
             
         } catch (Exception e) {

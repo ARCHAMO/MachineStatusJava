@@ -1,8 +1,8 @@
 package com.extrememachinestatus.apirest.machinestatus.controllers;
 
 import com.extrememachinestatus.apirest.machinestatus.commons.ResponseWebApi;
-import com.extrememachinestatus.apirest.machinestatus.model.Estado;
-import com.extrememachinestatus.apirest.machinestatus.services.EstadoService;
+import com.extrememachinestatus.apirest.machinestatus.model.Transiciones;
+import com.extrememachinestatus.apirest.machinestatus.services.TransicionesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/estado")
-public class EstadoController {
+@RequestMapping("api/transiciones")
+public class TransicionesController {
     
     @Autowired
-    private EstadoService _estadoService;
+    private TransicionesService _transicionesService;
     
     @PostMapping
-    public ResponseWebApi create(@RequestBody Estado estado) {
+    public ResponseWebApi create(@RequestBody Transiciones transicion) {
         ResponseWebApi response = new ResponseWebApi();
         try {
-            response = _estadoService.create(estado);
+            response = _transicionesService.create(transicion);
         } catch (Exception e) {
             
         }
@@ -31,10 +31,10 @@ public class EstadoController {
     }
 
     @PostMapping("{id}")
-    public ResponseWebApi update(@PathVariable("id") Long id, @RequestBody Estado estado) {
+    public ResponseWebApi update(@PathVariable("id") Long id, @RequestBody Transiciones transicion) {
         ResponseWebApi response = new ResponseWebApi();
         try {
-            response = _estadoService.update(id, estado);
+            response = _transicionesService.update(id, transicion);
         } catch (Exception e) {
             
         }
@@ -45,7 +45,7 @@ public class EstadoController {
     public ResponseWebApi getAll() {
         ResponseWebApi response = new ResponseWebApi();
         try {
-            response = _estadoService.getAll();
+            response = _transicionesService.getAll();
         } catch (Exception e) {
             
         }
@@ -56,29 +56,18 @@ public class EstadoController {
     public ResponseWebApi getById(@PathVariable("id") Long id) {
         ResponseWebApi response = new ResponseWebApi();
         try {
-            response = _estadoService.getById(id);
+            response = _transicionesService.getById(id);
         } catch (Exception e) {
             
         }
         return response;
     }
     
-    @GetMapping("/objeto/{id}")
-    public ResponseWebApi getEstadosPorObjeto(@PathVariable("id") Long id) {
-        ResponseWebApi response = new ResponseWebApi();
-        try {
-            response = _estadoService.getEstadosPorObjeto(id);
-        } catch (Exception e) {
-            
-        }
-        return response;
-    }
-
     @DeleteMapping("{id}")
     public ResponseWebApi delete(@PathVariable("id") Long id) {
         ResponseWebApi response = new ResponseWebApi();
         try {
-            response = _estadoService.delete(id);
+            response = _transicionesService.delete(id);
         } catch (Exception e) {
             
         }

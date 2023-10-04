@@ -1,32 +1,25 @@
-
 package com.extrememachinestatus.apirest.machinestatus.services;
 
 import com.extrememachinestatus.apirest.machinestatus.commons.ResponseWebApi;
-import com.extrememachinestatus.apirest.machinestatus.model.Estado;
-import com.extrememachinestatus.apirest.machinestatus.model.ObjetosEstados;
-import com.extrememachinestatus.apirest.machinestatus.repository.IObjetosEstados;
+import com.extrememachinestatus.apirest.machinestatus.model.Transiciones;
+import com.extrememachinestatus.apirest.machinestatus.repository.ITransicionesRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ObjetosEstadosService {
+public class TransicionesService {
     
     @Autowired
-    private IObjetosEstados _objetosEstadosRepository;
+    private ITransicionesRepository _transicionesRepository;
     
-    public ResponseWebApi create(ObjetosEstados objetoEstado) {
+    public ResponseWebApi create(Transiciones transicion) {
         ResponseWebApi response = new ResponseWebApi();
-        ObjetosEstados result = null;
+        Transiciones result = null;
         try {
             
-            // Validamos si existe un objeto con el mismo nombre
-            result = null;// _objetosEstadosRepository.findByEstadoIdAndObjetoId(objetoEstado.getEstado_id(), objetoEstado.getObjeto_id());
-            if(result != null)
-                throw new Exception("Ya existe la relacion entre objeto y estado.");
-            
-            result = _objetosEstadosRepository.save(objetoEstado);
+            result = _transicionesRepository.save(transicion);
 
             response.setStatus(true);
             response.setMessage("Registro creado correctamente");
@@ -42,25 +35,28 @@ public class ObjetosEstadosService {
         return response;
     }
     
-    public ResponseWebApi update(Long id, ObjetosEstados objetoEstado) {
+    public ResponseWebApi update(Long id, Transiciones transicion) {
         ResponseWebApi response = new ResponseWebApi();
 
         // Validamos si el objeto a eliminar existe
-        ObjetosEstados existeObjeto = (ObjetosEstados) this.getById(id).getData();
+        Transiciones existeTransicion = (Transiciones) this.getById(id).getData();
 
         try {
-            if(existeObjeto == null)
-                throw new Exception("El objeto a modificar no existe");
+            if(existeTransicion == null)
+                throw new Exception("El transicion no existe");
             
-            // existeObjeto.setEstado_id(objetoEstado.getEstado_id());
-            // existeObjeto.setObjeto_id(objetoEstado.getObjeto_id());
-            existeObjeto.setEstadoRegistro(objetoEstado.getEstadoRegistro());
+            existeTransicion.setEstadoOrigenId(transicion.getEstadoOrigenId());
+            existeTransicion.setEstadoDestinoId(transicion.getEstadoDestinoId());
+            existeTransicion.setEstadoRegistro(transicion.getEstadoRegistro());
+            existeTransicion.setMetodoEjecucion(transicion.getMetodoEjecucion());
+            existeTransicion.setParametros(transicion.getParametros());
+
             
-            _objetosEstadosRepository.save(existeObjeto);
+            _transicionesRepository.save(existeTransicion);
 
             response.setStatus(true);
-            response.setMessage("Registro encontrado");
-            response.setData(existeObjeto);
+            response.setMessage("Registro modificado correctamento");
+            response.setData(existeTransicion);
             
         } catch (Exception e) {
             response.setStatus(false);
@@ -74,9 +70,9 @@ public class ObjetosEstadosService {
     
     public ResponseWebApi getById(Long id) {
         ResponseWebApi response = new ResponseWebApi();
-        Optional<ObjetosEstados> result = null;
+        Optional<Transiciones> result = null;
         try {
-            result = _objetosEstadosRepository.findById(id);
+            result = _transicionesRepository.findById(id);
 
             response.setStatus(true);
             response.setMessage(result == null ? "Registro no encontrado" : "Registro encontrado");
@@ -94,9 +90,9 @@ public class ObjetosEstadosService {
     
     public ResponseWebApi getAll() {
         ResponseWebApi response = new ResponseWebApi();
-        List<ObjetosEstados> result = null;
+        List<Transiciones> result = null;
         try {
-            result = _objetosEstadosRepository.findAll();
+            result = _transicionesRepository.findAll();
             
             response.setStatus(true);
             response.setMessage(result.size() + " registro encontrado");
@@ -115,16 +111,16 @@ public class ObjetosEstadosService {
     public ResponseWebApi delete(Long id) {
         ResponseWebApi response = new ResponseWebApi();
         // Validamos si el objeto a eliminar existe
-        ObjetosEstados existeObjeto = (ObjetosEstados) this.getById(id).getData();
+        Transiciones existeEstado = (Transiciones) this.getById(id).getData();
         try {
-            if(existeObjeto == null)
-                throw new Exception("El objeto a eliminar no existe");
+            if(existeEstado == null)
+                throw new Exception("El estado a eliminar no existe");
 
-            _objetosEstadosRepository.deleteById(id);
+            _transicionesRepository.deleteById(id);
             
             response.setStatus(true);
             response.setMessage("Registro eliminado correctamente");
-            response.setData(existeObjeto);
+            response.setData(existeEstado);
             
         } catch (Exception e) {
             response.setStatus(false);
@@ -133,4 +129,5 @@ public class ObjetosEstadosService {
         }
         return response;
     }
+    
 }
