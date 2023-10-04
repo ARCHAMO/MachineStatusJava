@@ -49,3 +49,50 @@ Descripcion: Permite configurar las transiciones que se pueden realizar entre un
 ## Documentación Servicios Rest 
 
 [https://documenter.getpostman.com/view/70301/2s9YJdV2ce#0543a246-1320-4381-ab68-24057b34a8da](https://documenter.getpostman.com/view/70301/2s9YJdV2ce#0543a246-1320-4381-ab68-24057b34a8da)
+
+## Features pendientes
+
+1.  Servicio para evaluar las transiciones basado en el estado inicial configurado de un Objeto. 
+    1.  No logro entender cuales o que tipo de reglas se determinan Para validar si cambia de estado o no.
+    2.  En el apartado de implementación “_Para validar su diseño, desarrollar dos web service rest, uno que le retorne cual es el estado y el otro modifica el estado. Su desarrollo debe programarse en lenguaje java.”._ **No entiendo a que se refiere a cual es el estado y el otro modificado el estado.**
+
+## Impedimentos presentados
+
+> Me tomo tiempo configurar el entorno de Java al tener conflictos entre versiones de SDK, por tener instalado herramientas para desarrollo Movil.
+
+> Curva Para recordar conceptos y maneras de declaración en Java, asi como tambien el manejo de JPA, ya que tenia alrededor de 4 años de no usarlo. Acltualmente mis Skill fuertes son, NodeJs, NestJs, c#, SQL Server, Oracle, MongoDB, pero logre adaptarme con mi lógica de programacion.
+
+## Arquitectura de Microservicios
+
+![](https://33333.cdn.cke-cs.com/kSW7V9NHUXugvhoQeFaf/images/24d2820101aa96393b46a24655b4de2eec356729029ab619.png)
+
+**Servicios de operaciones básicas**
+
+Identificamos los servicios, operaciones que tengan bajo acoplamiento y comenzamos a desagregarlos, basados en el impacto de la operación.
+
+**Service 1, 2, 3, x**
+
+Serán servicios desagregados con funciones específicas y puntuales que requieran de respuestas transaccionales con alta recurrencia pero poco tiempo de ejecución.
+
+**Service Bus Message**
+
+Este componente será encargado de registrar los mensajes de eventos enviados tanto por los servicios básicos como toda operación que se genere y que requiera ser comunicada hacia los demás actores de la solución.
+
+**Integration event trigger**
+
+Componente encargado de detectar operaciones de sincronización, ejecución de procesos de alta demanda, así como la comunicación con apis externas, este componente tendrá sus propios recursos escalables a demanda.
+
+**Synchronization Event Trigger**
+
+Componente encargado de detectar las operaciones básicas que se realizan entre Servicios y mantener la información sincronizada entre ellos.
+
+**Logic App BD Events**
+
+Componente encargado de detectar cambios en base de datos, que requieran de la ejecución y procesamiento de información de alta demanda.
+
+**RECOMENDACIONES ADICIONALES**
+
+1.  Implementar principios SOLID, con el objetivo de mantener más mantenible y soportada la solución.
+2.  Implementar patrón CQRS, Para dividir las operaciones de escritura y lectura.
+3.  Implementar arquitecturas en capas Para segregar responsabilidades.
+4.  Implementar patrón repositorio, en canso de requerir modificar la persistencia de los datos.
